@@ -1,4 +1,5 @@
 xset -b
+gpg-agent
 export EDITOR=emacsclient
 xrdb -load ~/.Xresources
 compton --backend glx --paint-on-overlay --vsync opengl-swc --no-fading-openclose &

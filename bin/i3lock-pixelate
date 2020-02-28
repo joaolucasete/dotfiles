@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+IMG=/tmp/i3lock.png
+maim /tmp/i3lock.png
+pixelate -i $IMG -o $IMG -p 85
+i3lock -i $IMG
+rm $IMG
