@@ -176,6 +176,9 @@ bindsym XF86AudioMute exec amixer -q set Master toggle
 bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
+# lock screen
+bindsym $mod+b exec "i3lock-pixelate 85"
+
 # screenshot
 bindsym Print exec "maim ~/pictures/screenshots/$(date -Iseconds | cut -d'+' -f1).png"
 bindsym $mod+Shift+Print exec "maim -u -s -n -l -c 0.157,0.333,0.466,0.4 | xclip -selection clipboard -t image/png"
