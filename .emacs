@@ -57,16 +57,16 @@
 ;; org
 (use-package org
   :config
+  (use-package org-indent
+    :diminish org-indent-mode)
+  (use-package htmlize
+    :ensure t)
+  
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook
             '(lambda ()
                (visual-line-mode 1))))
 
-(use-package org-indent
-  :diminish org-indent-mode)
-
-(use-package htmlize
-  :ensure t)
 
 ;; eshell
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
