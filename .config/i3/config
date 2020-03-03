@@ -184,7 +184,7 @@ bindsym Print exec "maim ~/pictures/screenshots/$(date -Iseconds | cut -d'+' -f1
 bindsym $mod+Shift+Print exec "maim -u -s -n -l -c 0.157,0.333,0.466,0.4 | xclip -selection clipboard -t image/png"
 bindsym $mod+Print exec "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
 
-set $keyboard_layout Keyboard Layout: (b) Canadian French, (e) US English
+set $keyboard_layout Keyboard Layout: (b) Brazilian ABNT2, (e) US English
 mode "$keyboard_layout" {
      bindsym b exec --no-startup-id setxkbmap -model abnt2 -layout br ,mode "default"
      bindsym e exec --no-startup-id setxkbmap us ,mode "default"

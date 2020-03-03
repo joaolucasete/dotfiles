@@ -55,13 +55,20 @@
 (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
 ;; org
+(use-package geiser
+  :ensure t
+  :hook (scheme-mode . geiser-mode))
+
 (use-package org
   :config
+
   (use-package org-indent
     :diminish org-indent-mode)
+
   (use-package htmlize
     :ensure t)
   
+  (setq org-log-done 'time)
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook
             '(lambda ()
@@ -204,7 +211,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
+    (geiser neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
