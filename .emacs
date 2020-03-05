@@ -195,6 +195,9 @@
   ('after-init-hook) . 'powerline-reset)
 
 ;; modes
+(use-package slime
+    :ensure t)
+
 (use-package go-mode
   :ensure t
   :config
@@ -211,7 +214,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (geiser neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
+    (slime geiser neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
