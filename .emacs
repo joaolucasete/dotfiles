@@ -59,7 +59,10 @@
 ;; org
 (use-package geiser
   :ensure t
-  :hook (scheme-mode . geiser-mode))
+  :hook
+  (scheme-mode . geiser-mode)
+  :config
+  (setq geiser-default-implementation 'guile))
 
 (use-package org
   :config
@@ -70,6 +73,10 @@
   (use-package htmlize
     :ensure t)
 
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((scheme . t)))
+  
   (setq org-log-done 'time)
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook
