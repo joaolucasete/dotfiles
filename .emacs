@@ -69,7 +69,7 @@
 
   (use-package htmlize
     :ensure t)
-  
+
   (setq org-log-done 'time)
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook
@@ -157,19 +157,18 @@
 
 (use-package ido-vertical-mode :ensure t
   :init
-  (ido-vertical-mode 1))
+  (ido-vertical-mode 1)
+  :config
+  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down))
 ; This enables arrow keys to select while in ido mode. If you want to
 ; instead use the default Emacs keybindings, change it to
 ; "'C-n-and-C-p-only"
-(setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
 (use-package async :ensure t
   :init
   (dired-async-mode 1))
 
-
-(use-package eldoc
-  :diminish eldoc-mode)
+(use-package eldoc :diminish eldoc-mode)
 
 (use-package cyberpunk-theme
   :ensure t
@@ -180,12 +179,20 @@
   :config
   (powerline-center-evil-theme))
 
-;; modes
+(use-package company :ensure t
+  :custom
+  (global-company-mode 1)
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .1)
+  (company-minimum-prefix-length 2)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t))
+
 (use-package go-mode
   :ensure t
   :config
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
-(use-package abbrev
-  :diminish abbrev-mode)
+(use-package abbrev :diminish abbrev-mode)
