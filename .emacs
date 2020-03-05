@@ -10,28 +10,30 @@
 (tool-bar-mode -1)                              ;; disable toolbar
 (menu-bar-mode -1)                              ;; disable menubar
 (scroll-bar-mode -1)                            ;; disable scrollbar
+(fringe-mode 1)                                 ;; shrink fringes
 (show-paren-mode 1)                             ;; show parent parentheses
-(display-line-numbers-mode 1)                   ;; display line numbers
-(setq-default display-line-numbers 'relative)   ;; display relative line number
+(global-hl-line-mode t)                         ;; highlight current line
 (setq inhibit-startup-message t)                ;; disable startup screen
 (setq x-select-enable-clipboard t)              ;; enable clipboard outside emacs
 (setq ring-bell-function 'ignore)               ;; disable ring-bell
 (defalias 'yes-or-no-p 'y-or-n-p)               ;; transform yes-or-no to y-or-n
-(global-hl-line-mode t)                         ;; highlight current line
 (setq scroll-conservatively 100)                ;; conservative scrolling
 (global-prettify-symbols-mode t)                ;; prettify symbols mode
+
+;; line numbers
+(display-line-numbers-mode 1)                   ;; show line numbers
+(setq-default display-line-numbers 'relative)   ;; set them to be relative
+
+;; enable bracket pair-matching
+(setq electric-pair-pairs '((?\{ . ?\})
+                            (?\( . ?\))
+                            (?\[ . ?\])
+                            (?\" . ?\")))
+(electric-pair-mode t)
 
 ;; backups
 (setq make-backup-files nil)                    ;; disable backup
 (setq auto-save-default nil)                    ;; disable backup
-
-(setq electric-pair-pairs '(
-                            (?\{ . ?\})
-                            (?\( . ?\))
-                            (?\[ . ?\])
-                            (?\" . ?\")
-                            ))
-(electric-pair-mode t)                          ;; enable bracket pair-matching
 
 ;; Creating a new window switches your cursor to it
 (defun split-and-follow-horizontally ()
@@ -39,7 +41,7 @@
   (split-window-below)
   (balance-windows)
   (other-window 1))
-(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally) 
 
 (defun split-and-follow-vertically ()
   (interactive)
@@ -74,64 +76,59 @@
             '(lambda ()
                (visual-line-mode 1))))
 
-
 ;; eshell
-(setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-(setq eshell-prompt-function
-      (lambda nil
-        (concat
-         (if (string= (eshell/pwd) (getenv "HOME"))
-             (propertize "~" 'face `(:foreground "#99CCFF"))
-           (replace-regexp-in-string
-            (getenv "HOME")
-            (propertize "~" 'face `(:foreground "#99CCFF"))
-            (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-         (if (= (user-uid) 0)
-             (propertize " α " 'face `(:foreground "#FF6666"))
-         (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+(use-package eshell
+  :config
 
-(setq eshell-highlight-prompt nil)
-(defalias 'open 'find-file-other-window)
-(defalias 'clean 'eshell/clear-scrollback)
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+  (setq eshell-prompt-function
+	(lambda nil
+          (concat
+           (if (string= (eshell/pwd) (getenv "HOME"))
+               (propertize "~" 'face `(:foreground "#99CCFF"))
+             (replace-regexp-in-string
+              (getenv "HOME")
+              (propertize "~" 'face `(:foreground "#99CCFF"))
+              (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+           (if (= (user-uid) 0)
+               (propertize " α " 'face `(:foreground "#FF6666"))
+             (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+  (setq eshell-highlight-prompt nil)
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
 
-(defun eshell/sudo-open (filename)
-  "Open a file as root in Eshell."
-  (let ((qual-filename (if (string-match "^/" filename)
-                           filename
-                         (concat (expand-file-name (eshell/pwd)) "/" filename))))
-    (switch-to-buffer
-     (find-file-noselect
-      (concat "/sudo::" qual-filename)))))
+  
+  (defun eshell/sudo-open (filename)
+    "Open a file as root in Eshell."
+    (let ((qual-filename (if (string-match "^/" filename)
+                             filename
+                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
+      (switch-to-buffer
+       (find-file-noselect
+	(concat "/sudo::" qual-filename))))))
 
-;; use-package
-
-(use-package exec-path-from-shell
-  :ensure t
+(use-package exec-path-from-shell :ensure t
   :config
   (exec-path-from-shell-initialize))
 
-;; treemacs
-(use-package neotree
-  :ensure t
+(use-package neotree :ensure t
   :config
   (setq-default neo-theme 'arrow)
   (global-set-key [f8] 'neotree-toggle))
 
-(use-package diminish ;; hides minor modes
-  :ensure t)
+(use-package slime :ensure t)    ;; slime
+(use-package magit :ensure t)    ;; it's git magic
+(use-package diminish :ensure t) ;; hides minor modes
 
-(use-package which-key ;; command tips
-  :ensure t
+(use-package which-key :ensure t ;; command tips
   :diminish which-key-mode
   :init
   (which-key-mode))
 
- (use-package swiper ;; mini-buffer with results from C-s
-	:ensure t
-	:bind ("C-s" . 'swiper))
+(use-package swiper :ensure t ;; mini-buffer with results from C-s
+  :bind ("C-s" . 'swiper))
 
-(use-package evil
-  :ensure t
+(use-package evil :ensure t
   :defer nil
   :init
   (setq evil-want-keybinding nil)
@@ -139,8 +136,7 @@
   :config
   (evil-mode 1))
 
-(use-package switch-window
-  :ensure t
+(use-package switch-window :ensure t
   :config
   (setq switch-window-input-style 'minibuffer)
   (setq switch-window-increase 4)
@@ -159,8 +155,7 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-everywhere t))
 
-(use-package ido-vertical-mode
-  :ensure t
+(use-package ido-vertical-mode :ensure t
   :init
   (ido-vertical-mode 1))
 ; This enables arrow keys to select while in ido mode. If you want to
@@ -168,13 +163,10 @@
 ; "'C-n-and-C-p-only"
 (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
-(use-package async
-  :ensure t
+(use-package async :ensure t
   :init
   (dired-async-mode 1))
 
-(use-package magit
-  :ensure t)
 
 (use-package eldoc
   :diminish eldoc-mode)
@@ -184,29 +176,20 @@
   :init
   (load-theme 'cyberpunk t))
 
-(use-package spaceline
-  :ensure t)
-
-(use-package powerline
-  :ensure t
-  :init
-  (spaceline-spacemacs-theme)
-  :hook
-  ('after-init-hook) . 'powerline-reset)
+(use-package powerline :ensure t
+  :config
+  (powerline-center-evil-theme))
 
 ;; modes
-(use-package slime
-    :ensure t)
-
 (use-package go-mode
   :ensure t
   :config
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
-
 (use-package abbrev
   :diminish abbrev-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -214,7 +197,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (slime geiser neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
+    (symon exwm-config exwm slime geiser neotree cyberpunk-theme powerline go-mode async ido-vertical-mode switch-window evil swiper which-key diminish htmlize use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
