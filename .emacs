@@ -84,35 +84,45 @@
                (visual-line-mode 1))))
 
 ;; eshell
-(use-package eshell
-  :config
+(setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+(setq eshell-prompt-function
+      (lambda nil
+        (concat
+         (if (string= (eshell/pwd) (getenv "HOME"))
+             (propertize "~" 'face `(:foreground "#99CCFF"))
+           (replace-regexp-in-string
+            (getenv "HOME")
+            (propertize "~" 'face `(:foreground "#99CCFF"))
+            (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+         (if (= (user-uid) 0)
+             (propertize " α " 'face `(:foreground "#FF6666"))
+         (propertize " λ " 'face `(:foreground "#A6E22E"))))))
 
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-  (setq eshell-prompt-function
-	(lambda nil
-          (concat
-           (if (string= (eshell/pwd) (getenv "HOME"))
-               (propertize "~" 'face `(:foreground "#99CCFF"))
-             (replace-regexp-in-string
-              (getenv "HOME")
-              (propertize "~" 'face `(:foreground "#99CCFF"))
-              (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-           (if (= (user-uid) 0)
-               (propertize " α " 'face `(:foreground "#FF6666"))
-             (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-  (setq eshell-highlight-prompt nil)
-  (defalias 'open 'find-file-other-window)
-  (defalias 'clean 'eshell/clear-scrollback)
+(setq eshell-highlight-prompt nil)
 
-  
-  (defun eshell/sudo-open (filename)
-    "Open a file as root in Eshell."
-    (let ((qual-filename (if (string-match "^/" filename)
-                             filename
-                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
-      (switch-to-buffer
-       (find-file-noselect
-	(concat "/sudo::" qual-filename))))))
+(defalias 'open 'find-file-other-window)
+(defalias 'clean 'eshell/clear-scrollback)
+
+(defun eshell/sudo-open (filename)
+  "Open a file as root in Eshell."
+  (let ((qual-filename (if (string-match "^/" filename)
+                           filename
+                         (concat (expand-file-name (eshell/pwd)) "/" filename))))
+    (switch-to-buffer
+     (find-file-noselect
+      (concat "/sudo::" qual-filename)))))
+
+(defun eshell-other-window ()
+  "Create or visit an eshell buffer."
+  (interactive)
+  (if (not (get-buffer "*eshell*"))
+      (progn
+        (split-window-sensibly (selected-window))
+        (other-window 1)
+        (eshell))
+    (switch-to-buffer-other-window "*eshell*")))
+
+(global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
 (use-package exec-path-from-shell :ensure t
   :config
@@ -123,7 +133,6 @@
   (setq-default neo-theme 'arrow)
   (global-set-key [f8] 'neotree-toggle))
 
-(use-package slime :ensure t)    ;; slime
 (use-package magit :ensure t)    ;; it's git magic
 (use-package diminish :ensure t) ;; hides minor modes
 
@@ -196,10 +205,38 @@
   (company-tooltip-align-annotations 't)
   (global-company-mode t))
 
+(use-package slime :ensure t
+  :config
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (slime-setup '(slime-fancy)))    ;; slime
+
 (use-package go-mode
   :ensure t
   :config
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
 (use-package abbrev :diminish abbrev-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-begin-commands (quote (self-insert-command)))
+ '(company-idle-delay 0.1)
+ '(company-minimum-prefix-length 2)
+ '(company-show-numbers t)
+ '(company-tooltip-align-annotations t)
+ '(global-company-mode t)
+ '(package-selected-packages
+   (quote
+    (nix-mode which-key use-package switch-window swiper slime powerline neotree magit ido-vertical-mode htmlize go-mode geiser exec-path-from-shell evil diminish cyberpunk-theme company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
