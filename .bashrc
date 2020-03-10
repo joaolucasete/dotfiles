@@ -112,5 +112,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.cfg --work-tree=$HOME'
 export GPG_TTY=$(tty)
