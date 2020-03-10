@@ -100,7 +100,6 @@
   users.users.ratsclub = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "video" ];
-    shell = pkgs.fish;
   };
 
   system.stateVersion = "19.09"; 
