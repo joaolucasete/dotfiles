@@ -24,10 +24,10 @@
   
   environment.systemPackages = with pkgs; [
 
-    emacs
     git
     python3
-    sbcl
+    vim
+    emacs
 
     dunst libnotify # notifications
     maim # screenshots
@@ -50,7 +50,6 @@
     };
 
     light.enable = true;
-    fish.enable = true;
     nm-applet.enable = true;
   };
   
@@ -78,12 +77,6 @@
     xserver = {
 
       displayManager = {
-
-        #sessionCommands = ''
-        #  # Network Manager Applet
-        #  ${pkgs.networkmanagerapplet}/bin/nm-applet &
-        #'';
-        
         lightdm.enable = true;
       };
       
@@ -100,8 +93,8 @@
       libinput.enable = true;
     };
 
-    emacs.enable = true;
     acpid.enable = true;
+    emacs.enable = true;
     printing.enable = true;
     tlp.enable = true;
   };
