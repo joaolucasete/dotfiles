@@ -218,25 +218,3 @@
 
 (use-package nix-mode
   :mode "\\.nix\\'")
-
-(use-package abbrev :diminish abbrev-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-begin-commands (quote (self-insert-command)))
- '(company-idle-delay 0.1)
- '(company-minimum-prefix-length 2)
- '(company-show-numbers t)
- '(company-tooltip-align-annotations t)
- '(global-company-mode t)
- '(package-selected-packages
-   (quote
-    (nix-mode which-key use-package switch-window swiper slime powerline neotree magit ido-vertical-mode htmlize go-mode geiser exec-path-from-shell evil diminish cyberpunk-theme company))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

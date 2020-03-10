@@ -39,9 +39,8 @@
     tdesktop
     firefox
     rxvt_unicode
-    
+    pass
   ];
-
 
   programs = {
     gnupg.agent = {
@@ -52,7 +51,6 @@
     light.enable = true;
     nm-applet.enable = true;
   };
-  
 
   sound.enable = true;
   nixpkgs.config.pulseaudio = true;
