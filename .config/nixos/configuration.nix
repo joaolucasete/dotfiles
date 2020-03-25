@@ -20,6 +20,7 @@
       noto-fonts-cjk
       noto-fonts-emoji
       hack-font
+      ibm-plex
   ];
   
   environment.systemPackages = with pkgs; [
@@ -39,7 +40,7 @@
     tdesktop
     firefox
     rxvt_unicode
-    pass
+
   ];
 
   programs = {
