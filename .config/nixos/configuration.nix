@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
@@ -10,8 +10,12 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "x230";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "x230";
+    extraHosts = "127.0.1.1 x230";
+    
+    networkmanager.enable = true;
+  };
 
   time.timeZone = "Europe/Lisbon";
 
@@ -20,27 +24,12 @@
       noto-fonts-cjk
       noto-fonts-emoji
       hack-font
+      dina-font
       ibm-plex
   ];
   
   environment.systemPackages = with pkgs; [
-
-    git
-    python3
-    vim
-    emacs
-
-    dunst libnotify # notifications
-    maim # screenshots
-    xclip # clipboard
-    feh
-    
-    # programs
-    pass
-    tdesktop
-    firefox
     rxvt_unicode
-
   ];
 
   programs = {
@@ -91,17 +80,52 @@
       enable = true;
       libinput.enable = true;
     };
-
+    
+    emacs = {
+      enable = false;
+      install = true;
+      defaultEditor = true;
+    };
+    
     acpid.enable = true;
-    emacs.enable = true;
     printing.enable = true;
     tlp.enable = true;
   };
+
+  virtualisation.docker.enable = true;
   
   users.users.ratsclub = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
+    packages = with pkgs; [
+      bc
+      broot
+      (import ./emacs.nix { inherit pkgs; })
+      feh
+      firefox
+      fzf
+      git
+      htop
+      jq
+      maim
+      pass
+      ripgrep
+      st
+      tdesktop
+      xclip
+    ];
   };
 
-  system.stateVersion = "19.09"; 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  system = {
+    stateVersion = "19.09";
+    autoUpgrade.enable = true;
+    autoUpgrade.allowReboot = true;
+  };
+
 }
