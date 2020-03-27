@@ -6,14 +6,18 @@
       ./hardware-configuration.nix
     ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
-
+  boot = {
+    loader.grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/sda";
+    };
+    plymouth.enable = true;
+  };
+  
   networking = {
     hostName = "x230";
     extraHosts = "127.0.1.1 x230";
-    
     networkmanager.enable = true;
   };
 
@@ -26,10 +30,6 @@
       hack-font
       dina-font
       ibm-plex
-  ];
-  
-  environment.systemPackages = with pkgs; [
-    rxvt_unicode
   ];
 
   programs = {
@@ -80,10 +80,16 @@
       enable = true;
       libinput.enable = true;
     };
+
+    ipfs = {
+      enable = true;
+      enableGC = true;
+    };
     
     emacs = {
-      enable = false;
+      enable = true;
       install = true;
+      package = import ./emacs.nix { inherit pkgs; };
       defaultEditor = true;
     };
     
@@ -92,15 +98,23 @@
     tlp.enable = true;
   };
 
-  virtualisation.docker.enable = true;
-  
+  virtualisation.docker = {
+    enable = true;
+    autoPrune.enable = true;
+  };  
+
   users.users.ratsclub = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "docker"
+      "lxd"
+    ];
     packages = with pkgs; [
       bc
       broot
-      (import ./emacs.nix { inherit pkgs; })
       feh
       firefox
       fzf

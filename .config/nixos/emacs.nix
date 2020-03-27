@@ -19,7 +19,9 @@ in
      beacon
      cyberpunk-theme
      company
+     diminish
      exec-path-from-shell
+     htmlize
      ido-vertical-mode
      neotree
      nix-mode
@@ -27,6 +29,7 @@ in
      slime
      swiper
      switch-window
+     use-package
      which-key
   ]) ++ (with epkgs.elpaPackages; [
      beacon
