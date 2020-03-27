@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-
-VALUE=$1
-IMG=/tmp/i3lock.png
-maim /tmp/i3lock.png
-pixelate -i $IMG -o $IMG -p $VALUE
-i3lock -i $IMG
-rm $IMG
