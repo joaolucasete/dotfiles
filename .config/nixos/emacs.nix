@@ -26,7 +26,9 @@ in
      neotree
      nix-mode
      powerline
+     rust-mode
      slime
+     spaceline
      swiper
      switch-window
      use-package
@@ -34,4 +36,5 @@ in
   ]) ++ (with epkgs.elpaPackages; [
      beacon
      nameless
+     rainbow-mode
   ]))
