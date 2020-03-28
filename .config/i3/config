@@ -179,7 +179,7 @@ bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 # lock screen
-bindsym $mod+b exec "i3lock"
+bindsym $mod+b exec "DIR=/tmp/screen.png; maim | convert - -scale 10% -scale 1000% $DIR && i3lock -i $DIR"
 
 # screenshot
 bindsym Print exec "maim ~/pictures/screenshots/$(date -Iseconds | cut -d'+' -f1).png"
