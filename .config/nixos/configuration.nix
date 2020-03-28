@@ -109,7 +109,6 @@
     };
 
     lxd.enable = true;
-  };
   };  
 
   users.users.ratsclub = {
