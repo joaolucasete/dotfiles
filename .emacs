@@ -62,6 +62,9 @@
 
   (use-package htmlize :ensure t)
 
+  (use-package ox-hugo :ensure t
+    :after ox)
+  
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((scheme . t)))
