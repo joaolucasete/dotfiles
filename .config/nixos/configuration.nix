@@ -122,9 +122,9 @@
       hsetroot
       htop
       httpie
+      hugo
       imagemagick
       jq
-      lxc
       maim
       nodejs-12_x
       pass
