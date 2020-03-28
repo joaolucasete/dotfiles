@@ -52,6 +52,7 @@
   hardware = {
     pulseaudio.enable = true;
     brightnessctl.enable = true;
+    bluetooth.enable = true;
   };
   
   services = {
