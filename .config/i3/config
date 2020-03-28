@@ -170,7 +170,7 @@ new_window pixel 1
 exec --no-startup-id nm-applet
 
 # background image
-exec feh --bg-fill ~/pictures/wp/mountain3.jpg
+exec --no-startup-id hsetroot -solid "#1D1D1D"
 
 bindsym XF86AudioRaiseVolume exec "amixer -q sset Master 5%+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -q sset Master 5%- unmute"
