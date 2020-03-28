@@ -25,6 +25,7 @@ in
      ido-vertical-mode
      neotree
      nix-mode
+     ox-hugo
      powerline
      rust-mode
      slime
