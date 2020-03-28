@@ -1,9 +1,6 @@
 (require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-	     '("gnu" . "https://elpa.gnu.org/packages/"))
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq package-archives nil)
+(setq package-enable-at-startup nil)
 (package-initialize)
 
 ;; ui
@@ -57,21 +54,13 @@
 (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
 ;; org
-(use-package geiser
-  :ensure t
-  :hook
-  (scheme-mode . geiser-mode)
-  :config
-  (setq geiser-default-implementation 'guile))
-
 (use-package org
   :config
 
   (use-package org-indent
     :diminish org-indent-mode)
 
-  (use-package htmlize
-    :ensure t)
+  (use-package htmlize :ensure t)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -96,7 +85,7 @@
             (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
          (if (= (user-uid) 0)
              (propertize " α " 'face `(:foreground "#FF6666"))
-         (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+         (propertize " λ " 'face `(:foreground "#FF1493"))))))
 
 (setq eshell-highlight-prompt nil)
 
@@ -134,14 +123,14 @@
   (global-set-key [f8] 'neotree-toggle))
 
 (use-package magit :ensure t)    ;; it's git magic
-(use-package diminish :ensure t) ;; hides minor modes
+(use-package diminish :ensure t ) ;; hides minor modes
 
 (use-package which-key :ensure t ;; command tips
   :diminish which-key-mode
   :init
   (which-key-mode))
 
-(use-package swiper :ensure t ;; mini-buffer with results from C-s
+(use-package swiper :ensure t;; mini-buffer with results from C-s
   :bind ("C-s" . 'swiper))
 
 (use-package evil :ensure t
@@ -171,7 +160,7 @@
   (setq ido-create-new-buffer 'always)
   (setq ido-everywhere t))
 
-(use-package ido-vertical-mode :ensure t
+(use-package ido-vertical-mode
   :init
   (ido-vertical-mode 1)
   :config
@@ -186,12 +175,11 @@
 
 (use-package eldoc :diminish eldoc-mode)
 
-(use-package cyberpunk-theme
-  :ensure t
+(use-package cyberpunk-theme :ensure t
   :init
   (load-theme 'cyberpunk t))
 
-(use-package powerline :ensure t
+(use-package powerline :ensure t)
   :config
   (powerline-center-evil-theme))
 
@@ -210,11 +198,17 @@
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (slime-setup '(slime-fancy)))    ;; slime
 
-(use-package go-mode
-  :ensure t
-  :config
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save))
+; (use-package go-mode
+;   :ensure t
+;   :config
+;   (setq gofmt-command "goimports")
+;   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package nix-mode
   :mode "\\.nix\\'")
+
+(use-package rainbow-mode :ensure t)
+  :config
+  :hook (prog-mode . rainbow-mode))
+
+(use-package rust-mode :ensure t)
