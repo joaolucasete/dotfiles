@@ -15,6 +15,16 @@
     plymouth.enable = true;
   };
   
+  # audio
+  sound.enable = true;
+  nixpkgs.config.pulseaudio = true;
+  hardware.pulseaudio.enable = true;
+
+  # powermanagement
+  powerManagement.enable = true;
+  services.acpid.enable = true;
+  services.tlp.enable = true;
+
   networking = {
     hostName = "x230";
     extraHosts = "127.0.1.1 x230";
@@ -29,11 +39,7 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      hack-font
-      dina-font
       unstable.uw-ttyp0
-      ibm-plex
-      terminus
     ];
 
   programs = {
@@ -45,13 +51,8 @@
     light.enable = true;
     nm-applet.enable = true;
   };
-
-  powerManagement.enable = true; 
-  sound.enable = true;
-  nixpkgs.config.pulseaudio = true;
-
+  
   hardware = {
-    pulseaudio.enable = true;
     brightnessctl.enable = true;
     bluetooth.enable = true;
   };
@@ -69,21 +70,9 @@
     };
 
     xserver = {
-
-      displayManager = {
-        lightdm.enable = true;
-      };
-      
-      desktopManager = {
-        default = "none";
-        xterm.enable = false;
-      };
-
-      windowManager = {
-         i3.enable = true;
-      };      
-
       enable = true;
+      displayManager.lightdm.enable = true;
+      windowManager.i3.enable = true;
       libinput.enable = true;
     };
 
@@ -93,17 +82,15 @@
     };
     
     emacs = {
-      enable = true;
+      enable = false;
       install = true;
       package = import ./emacs.nix { inherit pkgs; };
       defaultEditor = true;
     };
     
-    acpid.enable = true;
     printing.enable = true;
-    tlp.enable = true;
   };
-
+  
   virtualisation = {
     docker = {
       enable = true;
@@ -126,17 +113,23 @@
       aria2
       bc
       broot
+      cargo
       feh
       firefox
       fzf
+      gcc
       git
+      hsetroot
       htop
       httpie
       imagemagick
       jq
+      lxc
       maim
+      nodejs-12_x
       pass
       ripgrep
+      rustc
       rxvt_unicode
       tdesktop
       xclip
