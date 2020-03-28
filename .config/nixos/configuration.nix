@@ -23,14 +23,18 @@
 
   time.timeZone = "Europe/Lisbon";
 
-  fonts.fonts = with pkgs; [
+  fonts.fonts = with pkgs;
+    let unstable = import <nixos-unstable> {};
+    in [
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
       hack-font
       dina-font
+      unstable.uw-ttyp0
       ibm-plex
-  ];
+      terminus
+    ];
 
   programs = {
     gnupg.agent = {
@@ -98,9 +102,14 @@
     tlp.enable = true;
   };
 
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune.enable = true;
+    };
+
+    lxd.enable = true;
+  };
   };  
 
   users.users.ratsclub = {
@@ -113,6 +122,7 @@
       "lxd"
     ];
     packages = with pkgs; [
+      aria2
       bc
       broot
       feh
@@ -120,11 +130,13 @@
       fzf
       git
       htop
+      httpie
+      imagemagick
       jq
       maim
       pass
       ripgrep
-      st
+      rxvt_unicode
       tdesktop
       xclip
     ];

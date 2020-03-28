@@ -1,7 +1,9 @@
 /* fonts */
-URxvt.font:         xft:Hack-Regular:pixelsize=14,xft:Symbola
-URxvt.boldFont:     xft:Hack-Bold:pixelsize=14:weight=bold,xft:Symbola
-URxvt.italicFont:   xft:Hack-RegularOblique:pixelsize=14:slant=italic,xft:Symbola
+URxvt.font:		xft:Ttyp0:size=11
+URxvt.boldFont: 	xft:Ttyp0:style=Bold:size=11
+URxvt.italicFont: 	xft:Ttyp0:style=Italic:size=11
+URxvt.boldItalicFont: 	xft:Ttyp0:style=Bold Italic:size=11
+URxvt.letterSpace: 1
 
 URxvt.scrollBar: false
 URxvt.internalBorder: 5

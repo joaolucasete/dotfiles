@@ -2,7 +2,7 @@
 set $mod Mod4
 
 # font
-font pango:monospace 8
+font Ttyp0 16px 
 
 floating_modifier $mod
 
@@ -147,7 +147,8 @@ client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 client.background       #FFFFFF
 
 bar {
-        tray_output primary
+	font xft:Ttyp0 12px
+	tray_output primary
         status_command i3status
 	
 	colors {
