@@ -113,6 +113,5 @@ if ! shopt -oq posix; then
 fi
 
 alias config='git --git-dir=$HOME/.cfg --work-tree=$HOME'
-export GPG_TTY=$(tty)
 
 source /home/ratsclub/.config/broot/launcher/bash/br
