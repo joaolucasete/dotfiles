@@ -1,0 +1,6 @@
+#!/bin/sh
+
+DIR=/tmp/lockscreen.png
+
+maim | convert - -scale 10% -scale 1000% $DIR && \
+i3lock -i $DIR

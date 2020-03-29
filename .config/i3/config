@@ -13,7 +13,7 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_custom 
 bindsym $mod+Shift+p exec --no-startup-id passmenu
 
 # change focus
@@ -63,9 +63,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -105,8 +102,10 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 #reload the configuration file
 bindsym $mod+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -143,7 +142,6 @@ client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
 client.unfocused        #333333 #222222 #888888 #292D2E   #222222
 client.urgent           #2F343A #FF0000 #FFFFFF #FF0000   #FF0000
 client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
-
 client.background       #FFFFFF
 
 bar {
@@ -179,12 +177,12 @@ bindsym XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 5
 
 # lock screen
-bindsym $mod+b exec "DIR=/tmp/screen.png; maim | convert - -scale 10% -scale 1000% $DIR && i3lock -i $DIR"
+bindsym $mod+b exec "i3lock_custom"
 
 # screenshot
-bindsym Print exec "maim ~/pictures/screenshots/$(date -Iseconds | cut -d'+' -f1).png"
-bindsym $mod+Shift+Print exec "maim -u -s -n -l -c 0.157,0.333,0.466,0.4 | xclip -selection clipboard -t image/png"
-bindsym $mod+Print exec "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
+bindsym Print exec "screenshot_custom" 
+bindsym $mod+Shift+Print exec "screenshot_custom 'selection'"
+bindsym $mod+Print exec "screenshot_custom 'window'"
 
 set $keyboard_layout Keyboard Layout: (b) Brazilian ABNT2, (e) US English
 mode "$keyboard_layout" {

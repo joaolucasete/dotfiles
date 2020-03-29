@@ -1,0 +1,20 @@
+#!/bin/sh
+
+DIR=~/pictures/screenshots
+
+mkdir -p $DIR
+
+case $1 in
+    window)
+	maim -i $(xdotool getactivewindow) \
+	     | xclip -selection clipboard -t image/png
+	;;
+    
+    selection)
+	maim -u -s -n -l -c 0.157,0.333,0.466,0.4 \
+	    | xclip -selection clipboard -t image/png
+	;;
+    *)
+      maim "$DIR/$(date -Iseconds | cut -d'+' -f1).png"
+      ;;
+esac

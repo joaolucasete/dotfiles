@@ -1,0 +1,6 @@
+#!/bin/sh
+
+dmenu_run \
+  -fn 'Ttyp0' \
+  -nb '#000000' \
+  -sb '#7b68ee'
