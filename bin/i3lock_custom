@@ -1,6 +1,5 @@
 #!/bin/sh
 
-DIR=/tmp/lockscreen.png
-
-maim | convert - -scale 10% -scale 1000% $DIR && \
-i3lock -i $DIR
+maim \
+    | convert - -scale 10% -scale 1000% RGB:- \
+    | i3lock --raw 1370x770:rgb --image /dev/stdin 
